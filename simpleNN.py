@@ -14,7 +14,6 @@ class SumNet(nn.Module):
 
     def forward(self,x):
         x=self.L1(x)
-     #   output = F.log_softmax(x, dim=1)
         return x
 
 
@@ -31,14 +30,14 @@ if __name__ == "__main__" :
         q=[]
         answer=[]
         for j in range(125):
-            A=random.randint(1,99)
-            B=random.randint(1,99)
+            A=random.randint(1,999)
+            B=random.randint(1,999)
             C=A+B
 
             q.append([A,B])
             answer.append([C])
 
-        data=tf.Tensor(q);
+        data=tf.Tensor(q)
         data.to(device)
         target=tf.Tensor(answer)
         target.to(device)
@@ -61,8 +60,8 @@ if __name__ == "__main__" :
     model.eval()
 
 
-    A=random.randint(10,90)
-    B=random.randint(10,90)
+    A=random.randint(1000,9999)
+    B=random.randint(1000,9999)
 
     o=model(tf.Tensor([A,B]))
     print(f"{A} + {B} ={A+B} ANSWER={o[0]} ")
