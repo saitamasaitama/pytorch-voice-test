@@ -4,6 +4,8 @@ import torch.optim as optim
 import torch.nn.functional as F
 import random
 
+
+
 class SumNet(nn.Module):
 
     def __init__(self):
@@ -19,12 +21,13 @@ class SumNet(nn.Module):
 
 if __name__ == "__main__" :
 
+    
     device = tf.device("cpu")
     model=SumNet().to(device)
     #tf.manual_seed(1)
     optimizer = optim.Adadelta(model.parameters(), lr=1.0e-1)
+    loss_func = nn.MSELoss()
     model.train()
-
 
     for i in range(10000):
         q=[]
@@ -44,15 +47,12 @@ if __name__ == "__main__" :
 
         optimizer.zero_grad()
         output=model(data)
-    #    loss= F.l1_loss(output, target)
-        loss= F.mse_loss(output, target)
+        loss=loss_func(output, target)
 
         # 必須
         loss.backward()
-        #print(f"loss={loss}")
+        
         optimizer.step()
-
-
     #保存
 
 
