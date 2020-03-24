@@ -6,7 +6,8 @@ import wave
 import struct
 import os
 
-DIR=os.path.dirname(__file__)
+DIR=os.path.dirname(os.path.abspath(__file__))
+
 
 """
   受け取った波の音量の最大値/最小値を1.0にする。
