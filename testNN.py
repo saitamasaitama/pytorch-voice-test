@@ -5,6 +5,7 @@ import torch.optim as optim
 #テスト用レイヤ
 class MyLayer(nn.Module):
     def __init__(self, input, output):
+    def __init__(self):
         super(MyLayer, self).__init__()
         self.input = input
         self.output = output
@@ -13,7 +14,8 @@ class MyLayer(nn.Module):
         )
 
     def forward(self, input:torch.Tensor):
-        return torch.matmul(input, self.weight).mul(2)
+        return torch.ones([1,1])
+#        return torch.matmul(input, self.weight).mul(2)
 
 #最終的なSpeakerレイヤ
 #16bit 
@@ -40,15 +42,6 @@ class TripletMarginLoss(nn.Module):
 
         return loss
 
-#自作Loss
-
-    def forward2(self,
-            inputs:nn.Module,
-            target:torch.Tensor)->float:
-#        loss = function(inputs, targets)
-        print(f" INPUT={inputs},TARGET{target} ")
-        return 0.0
-
 def origin_loss(input:nn.Module,target:torch.Tensor)->float:
     return 2.1
 
@@ -61,8 +54,10 @@ class M(nn.Module):
         super(M, self).__init__()
         #self.conv1 = nn.Conv2d(1, 32, 3, 1)
         #self.L2=nn.Linear(1,1)
-        self.L1=MyLayer(1,2)
+        #ここで宣言しないと学習されない
+        self.L1=MyLayer()
         self.L2=SpeakerLayer()
+        self.M=MyLayer()
         print(f"conv1={self.L1}")
 
     def forward(self, a: torch.Tensor):
@@ -73,3 +68,5 @@ class M(nn.Module):
         return a.mul(2)
 
 #ここから
+
+print( M() ) 

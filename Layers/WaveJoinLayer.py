@@ -13,12 +13,12 @@ DIR=os.path.dirname(__file__)
   ・音の情報量減少＝なし
   ※入力は16bit intであること
 """
-class NormalizeLayer(nn.Module):
+class WaveJoin(nn.Module):
     samplingBit=16
 
-    def forward(self, input:tf.Tensor)->tf.Tensor:
+    def forward(self, input: tf.Tensor)->tf.Tensor:
         max=tf.abs(input[tf.argmax(tf.abs(input))])
-        mul=(math.pow(2,15))/max
+        mul=(math.pow(2,self.samplingBit-1))/max
         print(f"NORMALIZE={mul}" )
         return input.mul(mul)
 

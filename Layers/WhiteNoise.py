@@ -8,7 +8,7 @@ def then(a:Callable[[],bool],b:Callable[[],None]):
 
 def isPrime(n:int)->bool:
     if n < 2 :
-        return False;
+        return False
     if( n % 2 == 0):
         return False
     #3から順に割り切れるか判断

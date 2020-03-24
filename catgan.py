@@ -15,6 +15,9 @@ class Gan():
     generator:Generator=None
     discrimimator:Discriminator=None
 
+    def __init__(self):
+        pass
+
 
 
 

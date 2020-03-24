@@ -16,6 +16,7 @@ class SumNet(nn.Module):
 
     def forward(self,x):
         x=self.L1(x)
+
         return x
 
 
@@ -32,6 +33,8 @@ if __name__ == "__main__" :
     for i in range(10000):
         q=[]
         answer=[]
+
+        #学習用のバッチデータを作成
         for j in range(125):
             A=random.randint(1,999)
             B=random.randint(1,999)
@@ -42,24 +45,22 @@ if __name__ == "__main__" :
 
         data=tf.Tensor(q)
         data.to(device)
-        target=tf.Tensor(answer)
-        target.to(device)
+
+        label=tf.Tensor(answer)
+        label.to(device)
 
         optimizer.zero_grad()
         output=model(data)
-        loss=loss_func(output, target)
+
+        loss=loss_func(output,label)
 
         # 必須
         loss.backward()
-        
         optimizer.step()
-    #保存
 
 
 
     model.eval()
-
-
     A=random.randint(1000,9999)
     B=random.randint(1000,9999)
 
