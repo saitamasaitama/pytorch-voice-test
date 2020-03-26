@@ -19,6 +19,7 @@ class NormalizeLayer(nn.Module):
 
     def forward(self, input:tf.Tensor)->tf.Tensor:
         max=tf.abs(input[tf.argmax(tf.abs(input))])
+        print(max)
         mul=(math.pow(2,15))/max
         print(f"NORMALIZE={mul}" )
         return input.mul(mul)
@@ -45,7 +46,7 @@ if __name__ == "__main__":
     buff=voice.readframes(voice.getnframes())
     print(f"LEN={len(buff)}")
 
-    unpacked=tf.Tensor(struct.unpack(f"{voice.getnframes()}h",buff))
+    unpacked=tf.Tensor(struct.unpack(f"{voice.getnframes()}h",buff[:175104]))
 
     serialized=((layer(unpacked)).int())
     SERIAL_MAX=serialized[tf.argmax(serialized.abs())]
