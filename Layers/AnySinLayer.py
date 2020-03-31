@@ -16,14 +16,12 @@ sampleRate = 44100
 """
 class SinLayer(nn.Module):
     samplingBit=16
-    def __init__(self, f:float, s:float):
+    def __init__(self):
       super(SinLayer, self).__init__()
-      self.f = f
-      self.s = s
 
-    def forward(self)->tf.Tensor:
+    def forward(self, f:float, s:float)->tf.Tensor:
         out = tf.sin(
-          2 * math.pi * tf.arange(int(self.s * sampleRate))/ sampleRate * self.f
+          2 * math.pi * tf.arange(int(s * sampleRate))/ sampleRate * f
         ) * (math.pow(2, 15) - 1)
         #max = 30000
         #mul = 1/max
@@ -32,28 +30,12 @@ class SinLayer(nn.Module):
         #スケール取得
 
 
-layer=SinLayer(22050, 2)
+layer=SinLayer()
 
 
 if __name__ == "__main__":
-    '''
-    voice=wave.open( f"{DIR}/../Data/cat-cry3.wav","rb")
 
-    print(f"""
-    CHANNELS={voice.getnchannels()}
-    SAMPLEWIDTH={voice.getsampwidth()*8}
-    FRAMERATE={voice.getframerate()}
-    FRAMES={voice.getnframes()}
-    """)
-    FRAME_COUNT=voice.getnframes()
-
-
-    buff=voice.readframes(voice.getnframes())
-    print(f"LEN={len(buff)}")
-
-    unpacked=tf.Tensor(struct.unpack(f"{voice.getnframes()}h",buff))
-    '''
-    serialized=((layer()).int())
+    serialized=((layer(2200, 2)).int())
     count = len(serialized)
     SERIAL_MAX=serialized[tf.argmax(serialized.abs())]
     print(f"SERIAL_MAX=:{SERIAL_MAX}")
