@@ -15,5 +15,7 @@ l = 10
 plt.plot(torch.arange(l), torch.abs(z[:l]))
 plt.show()
 '''
-
-print(2**(1/12))
+if [0]:
+    print('Yes')
+else:
+    print('No')
